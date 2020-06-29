@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      #box {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        border: 3px solid #000;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box">
+    </div>
+
+    <script src="./Animation/LLH-Animation.js"></script>
+    <script type="text/javascript">
+      window.onload = function(){
+        var box = document.getElementById('box');
+        //使用json数据格式传入参数
+        box.onmouseover = function(){
+          startAnimation(box, {'width':500, 'height':500, 'opacity':100})
+        }
+      }
+    </script>
+  </body>
+</html>
