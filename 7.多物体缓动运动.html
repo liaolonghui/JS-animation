@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      div {
+        width: 200px;
+        height: 200px;
+        background-color: royalblue;
+        margin: 20px 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <script type="text/javascript">
+      var allBoxs = document.getElementsByTagName('div');
+
+      for(var i=0; i<allBoxs.length; i++){
+        allBoxs[i].onmouseover = function(){
+          startAnimation(this, 400);
+        }
+        allBoxs[i].onmouseout = function(){
+          startAnimation(this, 200);
+        }
+      }
+      //多物体运动时要把定时器绑定在对应的物体上。
+      var speed = 0;
+      function startAnimation(obj, endTarget){
+        clearInterval(obj.timer);
+
+        obj.timer = setInterval(function(){
+
+          speed = (endTarget - obj.offsetWidth)/20;
+          speed = endTarget > obj.offsetWidth ? Math.ceil(speed) : Math.floor(speed);
+          //console.log(endTarget,obj.offsetWidth,speed)
+
+          if(endTarget === obj.offsetWidth){
+            clearInterval(obj.timer);
+            return;
+          }
+
+          obj.style.width = obj.offsetWidth + speed + 'px';
+        },30);
+      }
+    </script>
+  </body>
+</html>

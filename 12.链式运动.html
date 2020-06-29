@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .box {
+        width: 200px;
+        height: 200px;
+        background-color: yellow;
+        margin: 20px 10px;
+        border: 5px solid #000;
+        position: relative;
+        left: 0;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box" id="box1"></div>
+    <div class="box" id="box2"></div>
+
+    <script type="text/javascript" src="./unfinishedAnimation/Animation.js"></script>
+    <script type="text/javascript">
+      window.onload = function(){
+        var box1 = document.getElementById('box1');
+        var box2 = document.getElementById('box2');
+
+        box1.onclick = function(){
+          startAnimation(box1, 'width', 500, function(){
+            startAnimation(box1, 'height', 500, function(){
+              startAnimation(box1, 'opacity', 100);
+            });
+          });
+        }
+        box2.ondblclick = function(){
+          startAnimation(box2, 'opacity', 100, function(){
+            startAnimation(box2, 'left', 300);
+          });
+        }
+        box2.onclick = function(){
+          startAnimation(box2, 'left', 0, function(){
+            startAnimation(box2, 'opacity', 30);
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

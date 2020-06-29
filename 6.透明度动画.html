@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      #box {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box">
+
+    </div>
+
+    <script type="text/javascript">
+      var box = document.getElementById('box');
+      box.onmouseover = function(){
+        opacityAnimation(this, 100);
+      }
+      box.onmouseout = function(){
+        opacityAnimation(this, 30);
+      }
+
+      var timer = null, alpha = 30, speed = 0;
+      function opacityAnimation(obj, endAlpha){
+        clearInterval(timer);
+        timer = setInterval(function(){
+          //speed大于0还是小于0(透明度增大还是减小)
+          speed = endAlpha > alpha ? 5 : -5;
+
+          //边界处理
+          if(alpha === endAlpha){
+            clearInterval(timer);
+            return;
+          }
+
+          alpha += speed;
+          obj.style.opacity = alpha/100;
+          obj.style.filter = "alpha(opacity=" + alpha + ")";  //为了兼容性采用字符串拼接，而非模板字符串。
+
+        },30);
+      }
+    </script>
+  </body>
+</html>

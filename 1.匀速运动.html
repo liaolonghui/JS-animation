@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>最简单的动画实现</title>
+    <style media="screen">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #btn {
+        margin-left: 50px;
+        width: 100px;
+        height: 50px;
+      }
+      #box {
+        width: 200px;
+        height: 200px;
+        background-color: yellow;
+        margin-top: 50px;
+        position: absolute;
+        left: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <button type="button" name="button" id="btn">动起来</button>
+    <div id="box">
+
+    </div>
+
+    <script type="text/javascript">
+      window.onload = function(){
+        let btn = document.getElementById('btn');
+        let box = document.getElementById('box');
+        let timer = null;
+
+        btn.onclick = function(){
+          //先关后开 好习惯
+          clearInterval(timer);
+          timer = setInterval(function(){
+            //边界
+            if(box.offsetLeft === 600){
+              clearInterval(timer);
+            }else{
+              box.style.left = box.offsetLeft + 10 + 'px';
+            }
+          },30)
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>侧边栏</title>
+    <style media="screen">
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      #box {
+        width: 200px;
+        height: 200px;
+        background-color: yellow;
+        position: relative;
+        left: -200px;
+      }
+      #box span {
+        position: absolute;
+        width: 40px;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        color: #fff;
+        background-color: #000;
+        right: -40px;
+        top: 50%;
+        margin-top: -30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box">
+      <span>拉开</span>
+    </div>
+
+    <script type="text/javascript">
+      let box = document.getElementById('box');
+      let timer = null, speed = 0;
+
+      box.onmouseover = function(){
+        startAnimation(this, 0);
+      }
+
+      box.onmouseout = function(){
+        startAnimation(this, -200);
+      }
+      //封装一下
+      function startAnimation(obj, end){
+        clearInterval(timer);
+        speed = end > obj.offsetLeft ? 5 : -10;
+        timer = setInterval(function(){
+          if(obj.offsetLeft === end){
+            clearInterval(timer);
+            //不使用else则可以选择return;
+            return;
+          }
+          obj.style.left = obj.offsetLeft + speed + 'px';
+        },30);
+      }
+    </script>
+  </body>
+</html>

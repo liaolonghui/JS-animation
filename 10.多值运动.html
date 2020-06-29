@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      div {
+        width: 200px;
+        height: 200px;
+        background-color: royalblue;
+        margin: 20px 10px;
+        border: 5px solid #000;
+        position: relative;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <script type="text/javascript">
+      var allBoxs = document.getElementsByTagName('div');
+
+      allBoxs[0].onmouseover = function(){
+        startAnimation(this, 'width', 400);
+      }
+      allBoxs[0].onmouseout = function(){
+        startAnimation(this, 'width', 200);
+      }
+      allBoxs[1].onmouseover = function(){
+        startAnimation(this, 'height', 400);
+      }
+      allBoxs[1].onmouseout = function(){
+        startAnimation(this, 'height', 200);
+      }
+      allBoxs[2].onclick = function(){
+        startAnimation(this, 'left', 400);
+      }
+      allBoxs[2].ondblclick = function(){
+        startAnimation(this, 'left', 0);
+      }
+
+      //多物体运动时要把定时器绑定在对应的物体上。
+      var speed = 0;
+      function startAnimation(obj, attr, endTarget){
+        clearInterval(obj.timer);
+
+        obj.timer = setInterval(function(){
+          //  获取正确的样式
+          var cur = parseInt(getStyle(obj, attr));
+
+          speed = (endTarget - cur)/20;
+          speed = endTarget > cur ? Math.ceil(speed) : Math.floor(speed);
+
+          if(endTarget === cur){
+            clearInterval(obj.timer);
+            return;
+          }
+
+          obj.style[attr] = cur + speed + 'px';
+        },30);
+      }
+
+      //获取元素的样式属性
+      function getStyle(obj, attr){
+        if(obj.currentStyle){
+          return obj.currentStyle[attr];
+        }else{
+          return getComputedStyle(obj, null)[attr];
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>缓动运动侧边栏</title>
+    <style media="screen">
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      #box {
+        width: 200px;
+        height: 200px;
+        background-color: yellow;
+        position: relative;
+        left: -200px;
+      }
+      #box span {
+        position: absolute;
+        width: 40px;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+        color: #fff;
+        background-color: #000;
+        right: -40px;
+        top: 50%;
+        margin-top: -30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box">
+      <span>拉开</span>
+    </div>
+
+    <script type="text/javascript">
+      //缓动动画公式：加速度=（结束值 - 起始值）/缓动系数          加速度由快到慢
+      let box = document.getElementById('box');
+      let timer = null, end1 = 0, end2 = -200, speed = 0 ;
+
+      box.onmouseover = function(){
+        slowAnimation(this, 0);
+      }
+      box.onmouseout = function(){
+        slowAnimation(this, -200);
+      }
+
+      function slowAnimation(obj, end){
+        clearInterval(timer);
+        timer = setInterval(function(){
+          speed = (end - box.offsetLeft)/20;
+          //speed大于0还是小于0(往右走还是往左走)
+          speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+          if(obj.offsetLeft === end){
+            clearInterval(timer);
+            return;
+          }
+          obj.style.left = obj.offsetLeft + speed + 'px';
+        },30);
+      }
+    </script>
+  </body>
+</html>
