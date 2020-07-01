@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #aside {
+        position: absolute;
+        top: 200px;
+        left: 5px;
+        width: 80px;
+      }
+      #aside img {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body style="height:5000px;">
+    <!-- 当前盒子的top = 页面滚动的高度 + 盒子的偏移量 -->
+    <div id="aside">
+      <img src="./aside.jpg" alt="aside">
+    </div>
+    <script src="./Animation/LLH-Animation.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      let aside = document.getElementById('aside');
+      let aside_top = aside.offsetTop;
+
+      window.onscroll = function(){
+        let docScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        docScrollTop = Math.round(docScrollTop);
+        console.log(docScrollTop)
+        startAnimation(aside, {'top': docScrollTop+aside_top});
+      }
+    </script>
+  </body>
+</html>

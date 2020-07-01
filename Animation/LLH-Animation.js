@@ -15,16 +15,23 @@ function startAnimation(obj, json, fn){
     var flag = true;  //标杆 如果为truw说明所有的属性值都达到了目标值
     //for in 循环遍历json
     for(attr in json){
-      //判断传入的属性是否时opacity
-      if(attr === 'opacity'){
-        //因为值(浮点型*100)不准，所以对小数位四舍五入round
-        cur = Math.round(parseFloat(getStyle(obj, attr)*100));
-      }else{
-        cur = parseInt(getStyle(obj, attr));
+      switch (attr) {
+        //判断传入的属性是否时opacity
+        case 'opacity':
+          //因为值(浮点型*100)不准，所以对小数位四舍五入round
+          cur = Math.round(parseFloat(getStyle(obj, attr)*100));
+          break;
+        //scrollTop(注意scrollTop可以获取到小数部分)
+        case 'scrollTop':
+          cur = Math.ceil(obj.scrollTop);
+          break;
+        default:
+          cur = parseInt(getStyle(obj, attr));
+          break;
       }
 
       //speed
-      speed = (json[attr] - cur)/20;
+      speed = (json[attr] - cur)/10;
       speed = json[attr] > cur ? Math.ceil(speed) : Math.floor(speed);
 
       //边界处理（要考虑到同时运动的情况需要每个属性值都达到目标值）
@@ -33,13 +40,20 @@ function startAnimation(obj, json, fn){
         flag = false;
       }
 
-      //判断传入的属性是否是opacity
       var sum = cur + speed;
-      if(attr === 'opacity'){
-        obj.style[attr] = sum/100;
-        obj.style['filter'] = "alpha(opacity="+sum+")";
-      }else{
-        obj.style[attr] = sum + 'px';
+      switch (attr) {
+        //判断传入的属性是否是opacity
+        case 'opacity':
+          obj.style[attr] = sum/100;
+          obj.style['filter'] = "alpha(opacity="+sum+")";
+          break;
+        //scrollTop
+        case 'scrollTop':
+          obj.scrollTop = sum;
+          break;
+        default:
+          obj.style[attr] = sum + 'px';
+          break;
       }
     }
 

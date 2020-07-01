@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>滚动监听</title>
+    <style media="screen">
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      ul {
+        list-style-type: none;
+      }
+      a {
+        text-decoration: none;
+      }
+      html, body {
+        width: 100%;
+        height: 100%;
+      }
+      .container {
+        width: 1190px;
+        height: 100%;
+        margin: 0 auto;
+      }
+      .container div {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        color: #fff;
+        font-size: 30px;
+      }
+      .aside {
+        position: fixed;
+        width: 40px;
+        right: 20px;
+        top: 280px;
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+      }
+      .aside li {
+        height: 50px;
+        border-bottom: 3px solid #ddd;
+        background-color: gray;
+        border-radius: 3px;
+      }
+      .aside li a {
+        color: peru;
+      }
+      .aside li.current {
+        background-color: yellow;
+      }
+      .aside li.current a {
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="box">
+      <div class="current">爱逛好货</div>
+      <div>好店主播</div>
+      <div>品质特色</div>
+      <div>猜你喜欢</div>
+    </div>
+    <ul class="aside" id="aside">
+      <li class="current">
+        <a href="javascript:void(0);">爱逛好货</a>
+      </li>
+      <li>
+        <a href="javascript:void(0);">好店主播</a>
+      </li>
+      <li>
+        <a href="javascript:void(0);">品质特色</a>
+      </li>
+      <li>
+        <a href="javascript:void(0);">猜你喜欢</a>
+      </li>
+    </ul>
+
+    <script src="./Animation/LLH-Animation.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      window.onload = function(){
+        var box = document.getElementById('box');
+        var allBoxs = box.children;
+        var aside = document.getElementById('aside');
+        var lis = aside.children;
+        var isClick = false;
+
+        //给div上色
+        var colors = ['red', 'pink', 'purple', 'blue'];
+        for(var i=0; i<allBoxs.length; i++){
+          allBoxs[i].style.backgroundColor = colors[i];
+        }
+
+        //监听侧边栏按钮的点击
+        for(var j=0; j<lis.length; j++){
+          lis[j].id = j;
+          lis[j].onclick = function(){
+            isClick = true;
+            for(var k=0; k<lis.length; k++){
+              lis[k].className = '';
+            }
+            this.className = 'current';
+            //document.documentElement.scrollTop = this.id * document.body.clientHeight;
+            startAnimation(document.documentElement,{
+              'scrollTop': this.id*document.body.clientHeight
+            },function(){
+              isClick = false;
+            });
+          }
+        }
+
+        //监听页面滚动
+        window.onscroll = function(){
+          if(!isClick){
+            //先获取页面滚动的高度
+            var docScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            for(var i=0; i<lis.length; i++){
+              if(docScrollTop > allBoxs[i].offsetTop){
+                for(var j=0; j<lis.length; j++){
+                  lis[j].className = '';
+                }
+                lis[i].className = 'current';
+              }
+            }
+          }
+        }
+
+      }
+    </script>
+  </body>
+</html>
